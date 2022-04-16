@@ -1,0 +1,610 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int c[10] = {};
+void selectitem();
+
+void gh();
+struct date {
+    int d;
+    int m;
+    int y;
+};
+struct acc {
+    string username = "";
+    string phoneNumber = "";
+    string Email = "";
+    string pass = "";
+    string passconf = "";
+    date dob;
+}user, user1;
+bool Register() {
+    cout << " Please enter username :\n"; cin >> user.username;     //username done
+
+    cout << " Please enter phone number :\n"; cin >> user.phoneNumber;   //phonenumber done
+
+    cout << " Please enter email :\n"; cin >> user.Email;  //email done
+
+    cout << " Please enter Date of birth \n Day: "; cin >> user.dob.d;
+    cout << "Month: "; cin >> user.dob.m;
+    cout << "Year: "; cin >> user.dob.y;  //dob done
+
+    cout << " Please enter password :\n\t\t";
+    cout << "*The password must be diffrent of user name*\n\t\t*Atleast 8 charachters*\n "; //password notes
+    cin >> user.pass;    //password done
+
+    cout << " confirmation password :\n"; cin >> user.passconf;   //password confirmation
+
+    //check for all data
+    while (user.pass != user.passconf || user.pass.length() < 8 || user.phoneNumber.length() < 11 || user.phoneNumber.length() != 11 || user.dob.d > 31 || user.dob.m > 12 || user.dob.y > 2017)
+    {
+        if (user.dob.d > 31 || user.dob.m > 12 || user.dob.y > 2022)    //case 1 eltari5 3'lt
+        {
+            cout << "invalid date";
+            cout << " Please enter Date of birth \n Day: "; cin >> user.dob.d;
+            cout << "Month: "; cin >> user.dob.m;
+            cout << "Year: "; cin >> user.dob.y;  //dob done
+
+
+        }
+        if (user.dob.y > 2017)   //case 2 underage user
+        {
+            cout << "Your age are not allowed";
+            return false;
+            break;
+
+        }
+        if (user.pass.length() < 8 && user.pass != user.passconf && user.phoneNumber.length() != 11)   //case 3 all data wrong
+        {
+            cout << "Register faild\n\t\t The password is short ,don't identical and phone nummber is invalid \nTry again\n";
+            user.phoneNumber.erase(); user.pass.erase(); user.passconf.erase();
+            cout << "Please enter password :\n"; cin >> user.pass;
+            cout << "confirmation password :\n"; cin >> user.passconf;
+            cout << " Please enter phone number :\n"; cin >> user.phoneNumber;
+        }
+        if (user.phoneNumber.length() != 11) // case 4 phone number wrong
+        {
+            cout << "Register faild\n\t\t The phone number is invalid\nTry again\n";
+            user.phoneNumber.erase();
+            cout << " Please enter phone number :\n"; cin >> user.phoneNumber;
+
+        }
+        if (user.pass != user.passconf) //case 5 el pass m4 zay b3d
+        {
+            cout << "Register faild\n\t\t The password not identical\nTry again\n";
+            user.pass.erase(); user.passconf.erase();
+            cout << "Please enter password :\n"; cin >> user.pass;
+            cout << "confirmation password :\n"; cin >> user.passconf;
+        }
+        if (user.pass.length() < 8)   //case 6 password short 
+        {
+            cout << "Register faild\n\t\t The password is short\nTry again\n";
+            user.pass.erase(); user.passconf.erase();
+            cout << "Please enter password :\n"; cin >> user.pass;
+            cout << "confirmation password :\n"; cin >> user.passconf;
+        }
+
+    }
+    if (user.pass == user.passconf && user.pass.length() >= 8 && user.phoneNumber.length() == 11)  // kol haga tmam
+    {
+        cout << "\nRegister completed\n";
+        return true;
+    }
+
+}
+bool login() {
+    string un = user.username, p = user.pass;     //variables nqaren bin elly mtsgl we elly haid5lo
+    int counter = 3;
+    cout << " Please enter user name :\n"; cin >> user1.username;
+    cout << " Please enter password :\n"; cin >> user1.pass;
+    while (un != user1.username || p != user1.pass)
+    {
+        cout << "Login faild\n try again\t" << "You have\t" << counter << "  ATTEMPT(S)\n";
+        cout << " Please enter user name :\n"; cin >> user1.username;
+        cout << " Please enter password :\n"; cin >> user1.pass;
+        counter--;
+        if (counter == 0)
+        {
+            cout << "You have been banned";
+            return false;
+            break;
+
+        }
+    }
+    if (un == user1.username && p == user1.pass)
+    {
+        cout << "Login successful";
+        return true;
+    }
+}
+
+
+struct bfastmenuitem //defintion of a struct to store data for breakfast 
+{
+    string bfastmenulist;
+    double pricesmall, pricemedium, pricelarge, calories;
+};
+
+struct lunchmenuitem
+{
+    string lunchmenulist;
+    double pricesmall, pricemedium, pricelarge, calories;
+};
+
+
+struct drinkmenuitem
+{
+    string drinkmenulist;
+    double pricesmall, pricemedium, pricelarge, calories;
+};
+struct Appetizersmenuitem
+{
+    string Appetizersmenulist;
+    double price, calories;
+};
+
+bfastmenuitem bfastmenu[11];
+
+void bfastgetdata(); //prototype of a function to loads breakfast data about the items in struct
+void bfastshowmenu(); // prototype of a function show the breakfast menu 
+
+
+lunchmenuitem lunchmenu[11];
+void lunchgetdata(); //prototype of a function to loads lunch data about the items in struct
+void lunchshowmenu(); // prototype of a function show the lunch menu 
+
+
+drinkmenuitem drinkmenu[11];
+
+void drinkgetdata(); //prototype of a function to loads drink data about the items in struct
+void drinkshowmenu(); // prototype of a function show the drink menu 
+
+Appetizersmenuitem Appetizersmenu[11];
+void Appetizersgetdata();
+void Appetizersshowmenu();
+
+
+void TotalCalories();
+
+int main()
+{
+    char x;
+    int y;
+    int choice;
+    char z;
+    bool r;          // dh elreturn mn elfunctions 
+
+    for (int i = 0; i < 1; i++)
+    {
+        cout << "\t\t\t_-_-_-_-_-_Welcome_-_-_-_-_-_\n\n press 1 to register\t press 2 to login\n"; cin >> choice;
+
+        if (choice == 1)
+        {
+            x = Register();
+            if (x == false)
+            {
+                break;
+            }
+            cout << "\nlogin to continue:\n";                  //5ls elregister we hai3ml login blacc elgdeed
+            x = login();
+        }
+        if (choice == 2)
+        {
+            x = login();
+        }
+    }
+    do {
+        cout << "                Welcome to FCIS Restaurant.          \n ";
+        cout << "             +============================+          \n\n";
+        cout << " press[1] for BreakFast\t press[2] for Lunch\n\n press[3] for Drinks\t press[4] for Appetizers & Extras" << endl;
+        cin >> y;
+        if (y > 4)
+        {
+            cout << "press[1] for BreakFast\t press[2] for Lunch\n press[3] for Drinks\t press[4] for Appetizers & Extras" << endl;
+            cin >> y;
+        }
+        else {
+
+            switch (y)
+            {
+            case 1:
+                bfastgetdata();
+                bfastshowmenu();
+                selectitem();
+                break;
+            case 2:
+                lunchgetdata();
+                lunchshowmenu();
+                selectitem();
+                break;
+            case 3:
+                drinkgetdata();
+                drinkshowmenu();
+                selectitem();
+                break;
+            case 4:
+                Appetizersgetdata();
+                Appetizersshowmenu();
+                selectitem();
+                break;
+            }
+        }
+        cout << "\n\tagain press y";
+        cin >> x;
+    } while (x == 'y');
+
+}
+
+
+
+void bfastgetdata()
+{
+    bfastmenu[1].bfastmenulist = "Toast";
+    bfastmenu[1].pricesmall = 2.00;
+    bfastmenu[1].pricemedium = 3.00;
+    bfastmenu[1].pricelarge = 4.00;
+    bfastmenu[1].calories = 313.00;
+    bfastmenu[2].bfastmenulist = "Egg muffin";
+    bfastmenu[2].pricesmall = 3.00;
+    bfastmenu[2].pricemedium = 5.00;
+    bfastmenu[2].pricelarge = 6.00;
+    bfastmenu[2].calories = 139.00;
+    bfastmenu[3].bfastmenulist = "Egg benedict";
+    bfastmenu[3].pricesmall = 3.00;
+    bfastmenu[3].pricemedium = 5.00;
+    bfastmenu[3].pricelarge = 6.00;
+    bfastmenu[3].calories = 276.00;
+    bfastmenu[4].bfastmenulist = "Croissant";
+    bfastmenu[4].pricesmall = 5.00;
+    bfastmenu[4].pricemedium = 6.50;
+    bfastmenu[4].pricelarge = 8.00;
+    bfastmenu[4].calories = 406.00;
+    bfastmenu[5].bfastmenulist = "Raspberry pie";
+    bfastmenu[5].pricesmall = 3.50;
+    bfastmenu[5].pricemedium = 5.00;
+    bfastmenu[5].pricelarge = 6.50;
+    bfastmenu[5].calories = 422.00;
+    bfastmenu[6].bfastmenulist = "Granola parfait";
+    bfastmenu[6].pricesmall = 3.00;
+    bfastmenu[6].pricemedium = 5.00;
+    bfastmenu[6].pricelarge = 7.00;
+    bfastmenu[6].calories = 426.00;
+    bfastmenu[7].bfastmenulist = "Biscuits";
+    bfastmenu[7].pricesmall = 2.00;
+    bfastmenu[7].pricemedium = 3.50;
+    bfastmenu[7].pricelarge = 5.00;
+    bfastmenu[7].calories = 353.00;
+    bfastmenu[8].bfastmenulist = "Hash browns";
+    bfastmenu[8].pricesmall = 5.00;
+    bfastmenu[8].pricemedium = 7.00;
+    bfastmenu[8].pricelarge = 10.00;
+    bfastmenu[8].calories = 326.00;
+    bfastmenu[9].bfastmenulist = "Potato puree";
+    bfastmenu[9].pricesmall = 3.00;
+    bfastmenu[9].pricemedium = 5.00;
+    bfastmenu[9].pricelarge = 6.00;
+    bfastmenu[9].calories = 88.00;
+    bfastmenu[10].bfastmenulist = "Roasted veggies";
+    bfastmenu[10].pricesmall = 4.00;
+    bfastmenu[10].pricemedium = 6.00;
+    bfastmenu[10].pricelarge = 7.50;
+    bfastmenu[10].calories = 113.00;
+}
+
+
+void bfastshowmenu()
+{
+    cout << "                Welcome to FCIS Restaurant.          \n ";
+    cout << "             +============================+          \n\n";
+    cout << "                  $  Breakfast Menu  $ \n\n";
+    cout << "  && Please select the food that you would like to purchase. && \n\n";
+    cout << "\t\t                                                         \n";
+    cout << "\t  Name \t\t          Small  Medium  Large \t Calories" << endl;
+    cout << "\t                                                         \n";
+    cout << "\t" << bfastmenu[1].bfastmenulist << "\t\t           " << bfastmenu[1].pricesmall << "\t   " << bfastmenu[1].pricemedium << "\t   " << bfastmenu[1].pricelarge << "\t    " << bfastmenu[1].calories << endl;
+    cout << "\t" << bfastmenu[2].bfastmenulist << "\t           " << bfastmenu[2].pricesmall << "\t   " << bfastmenu[2].pricemedium << "\t   " << bfastmenu[2].pricelarge << "\t    " << bfastmenu[2].calories << endl;
+    cout << "\t" << bfastmenu[3].bfastmenulist << "\t           " << bfastmenu[3].pricesmall << "\t   " << bfastmenu[3].pricemedium << "\t   " << bfastmenu[3].pricelarge << "\t    " << bfastmenu[3].calories << endl;
+    cout << "\t" << bfastmenu[4].bfastmenulist << "\t           " << bfastmenu[4].pricesmall << "\t   " << bfastmenu[4].pricemedium << "\t   " << bfastmenu[4].pricelarge << "\t    " << bfastmenu[4].calories << endl;
+    cout << "\t" << bfastmenu[5].bfastmenulist << "\t           " << bfastmenu[5].pricesmall << "\t   " << bfastmenu[5].pricemedium << "\t   " << bfastmenu[5].pricelarge << "\t    " << bfastmenu[5].calories << endl;
+    cout << "\t" << bfastmenu[6].bfastmenulist << "\t           " << bfastmenu[6].pricesmall << "\t   " << bfastmenu[6].pricemedium << "\t   " << bfastmenu[6].pricelarge << "\t    " << bfastmenu[6].calories << endl;
+    cout << "\t" << bfastmenu[7].bfastmenulist << "\t           " << bfastmenu[7].pricesmall << "\t   " << bfastmenu[7].pricemedium << "\t   " << bfastmenu[7].pricelarge << "\t    " << bfastmenu[7].calories << endl;
+    cout << "\t" << bfastmenu[8].bfastmenulist << "\t           " << bfastmenu[8].pricesmall << "\t   " << bfastmenu[8].pricemedium << "\t   " << bfastmenu[8].pricelarge << "\t    " << bfastmenu[8].calories << endl;
+    cout << "\t" << bfastmenu[9].bfastmenulist << "\t           " << bfastmenu[9].pricesmall << "\t   " << bfastmenu[9].pricemedium << "\t   " << bfastmenu[9].pricelarge << "\t    " << bfastmenu[9].calories << endl;
+    cout << "\t" << bfastmenu[10].bfastmenulist << "\t           " << bfastmenu[10].pricesmall << "\t   " << bfastmenu[10].pricemedium << "\t   " << bfastmenu[10].pricelarge << "\t    " << bfastmenu[10].calories << endl;
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t                                                                         \n";
+    cout << "\t    <<Note : All calories are calculated on the medium size>>      \n";
+
+
+
+
+
+
+}
+void Appetizersgetdata() {
+    Appetizersmenu[1].Appetizersmenulist = "Onion Rings";
+    Appetizersmenu[1].price = 3.5;
+    Appetizersmenu[1].calories = 251;
+    Appetizersmenu[2].Appetizersmenulist = "Mozzarella Sticks";
+    Appetizersmenu[2].price = 3.00;
+    Appetizersmenu[2].calories = 303;
+    Appetizersmenu[3].Appetizersmenulist = "Cheddar Cheese Roll";
+    Appetizersmenu[3].price = 2.00;
+    Appetizersmenu[3].calories = 224;
+    Appetizersmenu[4].Appetizersmenulist = "Fries with Cheese";
+    Appetizersmenu[4].price = 4.00;
+    Appetizersmenu[4].calories = 240;
+    Appetizersmenu[5].Appetizersmenulist = "Chicken wings";
+    Appetizersmenu[5].price = 5.00;
+    Appetizersmenu[5].calories = 210;
+    Appetizersmenu[6].Appetizersmenulist = "Fire Sauce";
+    Appetizersmenu[6].price = 1.00;
+    Appetizersmenu[7].Appetizersmenulist = "Buffalo Sauce";
+    Appetizersmenu[7].price = 1.00;
+    Appetizersmenu[8].Appetizersmenulist = "BBQ Sauce";
+    Appetizersmenu[8].price = 1.00;
+    Appetizersmenu[9].Appetizersmenulist = "Ranch Sauce";
+    Appetizersmenu[9].price = 1.00;
+}
+void Appetizersshowmenu() {
+    cout << "                Welcome to FCIS Restaurant.          \n ";
+    cout << "             +============================+          \n\n";
+    cout << "                   $  Appetizers Menu  $ \n\n";
+    cout << "  && Please select the food that you would like to purchase. && \n\n";
+    cout << "\t\t                                                         \n";
+    cout << "\t  Name \t\t                  Price  Calories" << endl;
+    cout << "\t                                                         \n";
+    cout << "\t" << Appetizersmenu[1].Appetizersmenulist << "\t\t           " << Appetizersmenu[1].price << "\t   " << Appetizersmenu[1].calories << endl;
+    cout << "\t" << Appetizersmenu[2].Appetizersmenulist << "\t\t   " << Appetizersmenu[2].price << "\t   " << Appetizersmenu[2].calories << endl;
+    cout << "\t" << Appetizersmenu[3].Appetizersmenulist << "\t\t   " << Appetizersmenu[3].price << "\t   " << Appetizersmenu[3].calories << endl;
+    cout << "\t" << Appetizersmenu[4].Appetizersmenulist << "\t\t   " << Appetizersmenu[4].price << "\t   " << Appetizersmenu[4].calories << endl;
+    cout << "\t" << Appetizersmenu[5].Appetizersmenulist << "\t\t           " << Appetizersmenu[5].price << "\t   " << Appetizersmenu[5].calories << endl;
+    cout << "\t" << Appetizersmenu[6].Appetizersmenulist << "\t\t           " << Appetizersmenu[6].price << "\t   " << Appetizersmenu[6].calories << endl;
+    cout << "\t" << Appetizersmenu[7].Appetizersmenulist << "\t\t           " << Appetizersmenu[7].price << "\t   " << Appetizersmenu[7].calories << endl;
+    cout << "\t" << Appetizersmenu[8].Appetizersmenulist << "\t\t           " << Appetizersmenu[8].price << "\t   " << Appetizersmenu[8].calories << endl;
+    cout << "\t" << Appetizersmenu[9].Appetizersmenulist << "\t\t           " << Appetizersmenu[9].price << "\t   " << Appetizersmenu[9].calories << endl;
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t                                                                         \n";
+}
+
+
+void lunchgetdata()
+{
+    lunchmenu[1].lunchmenulist = "BigBurger";
+    lunchmenu[1].pricesmall = 10.00;
+    lunchmenu[1].pricemedium = 13.00;
+    lunchmenu[1].pricelarge = 15.00;
+    lunchmenu[1].calories = 257.00;
+    lunchmenu[2].lunchmenulist = "CheeseBurger";
+    lunchmenu[2].pricesmall = 10.00;
+    lunchmenu[2].pricemedium = 13.00;
+    lunchmenu[2].pricelarge = 15.00;
+    lunchmenu[2].calories = 303.00;
+    lunchmenu[3].lunchmenulist = "ChickenBurger";
+    lunchmenu[3].pricesmall = 10.00;
+    lunchmenu[3].pricemedium = 13.00;
+    lunchmenu[3].pricelarge = 15.00;
+    lunchmenu[3].calories = 283.00;
+    lunchmenu[4].lunchmenulist = "Crispy Chicken Sandwich";
+    lunchmenu[4].pricesmall = 12.00;
+    lunchmenu[4].pricemedium = 15.00;
+    lunchmenu[4].pricelarge = 17.00;
+    lunchmenu[4].calories = 278.00;
+    lunchmenu[5].lunchmenulist = "Chicken Nuggets";
+    lunchmenu[5].pricesmall = 8.00;
+    lunchmenu[5].pricemedium = 10.00;
+    lunchmenu[5].pricelarge = 12.00;
+    lunchmenu[5].calories = 296.00;
+    lunchmenu[6].lunchmenulist = "Chicken Ranch Wrap";
+    lunchmenu[6].pricesmall = 14.00;
+    lunchmenu[6].pricemedium = 17.00;
+    lunchmenu[6].pricelarge = 20.00;
+    lunchmenu[6].calories = 430.00;
+    lunchmenu[7].lunchmenulist = "Taco";
+    lunchmenu[7].pricesmall = 15.00;
+    lunchmenu[7].pricemedium = 18.00;
+    lunchmenu[7].pricelarge = 20.00;
+    lunchmenu[7].calories = 226.00;
+    lunchmenu[8].lunchmenulist = "Steak";
+    lunchmenu[8].pricesmall = 20.00;
+    lunchmenu[8].pricemedium = 22.00;
+    lunchmenu[8].pricelarge = 25.00;
+    lunchmenu[8].calories = 271.00;
+    lunchmenu[9].lunchmenulist = "Sushi";
+    lunchmenu[9].pricesmall = 10.00;
+    lunchmenu[9].pricemedium = 12.00;
+    lunchmenu[9].pricelarge = 15.00;
+    lunchmenu[9].calories = 37.00;
+    lunchmenu[10].lunchmenulist = "macaroni with white sauce";
+    lunchmenu[10].pricesmall = 12.00;
+    lunchmenu[10].pricemedium = 15.00;
+    lunchmenu[10].pricelarge = 17.00;
+    lunchmenu[10].calories = 340.00;
+
+
+}
+
+void lunchshowmenu()
+{
+    cout << "                Welcome to FCIS Restaurant.          \n ";
+    cout << "             +============================+          \n\n";
+    cout << "                   $  Lunch Menu  $ \n\n";
+    cout << "  && Please select the food that you would like to purchase. && \n\n";
+    cout << "\t\t                                                         \n";
+    cout << "\t  Name \t\t                   Small  Medium  Large  Calories" << endl;
+    cout << "\t                                                         \n";
+    cout << "\t" << lunchmenu[1].lunchmenulist << "\t\t           " << lunchmenu[1].pricesmall << "\t   " << lunchmenu[1].pricemedium << "\t   " << lunchmenu[1].pricelarge << "\t    " << lunchmenu[1].calories << endl;
+    cout << "\t" << lunchmenu[2].lunchmenulist << "\t                   " << lunchmenu[2].pricesmall << "\t   " << lunchmenu[2].pricemedium << "\t   " << lunchmenu[2].pricelarge << "\t    " << lunchmenu[2].calories << endl;
+    cout << "\t" << lunchmenu[3].lunchmenulist << "\t                   " << lunchmenu[3].pricesmall << "\t   " << lunchmenu[3].pricemedium << "\t   " << lunchmenu[3].pricelarge << "\t    " << lunchmenu[3].calories << endl;
+    cout << "\t" << lunchmenu[4].lunchmenulist << "\t           " << lunchmenu[4].pricesmall << "\t   " << lunchmenu[4].pricemedium << "\t   " << lunchmenu[4].pricelarge << "\t    " << lunchmenu[4].calories << endl;
+    cout << "\t" << lunchmenu[5].lunchmenulist << "\t                   " << lunchmenu[5].pricesmall << "\t   " << lunchmenu[5].pricemedium << "\t   " << lunchmenu[5].pricelarge << "\t    " << lunchmenu[5].calories << endl;
+    cout << "\t" << lunchmenu[6].lunchmenulist << "\t           " << lunchmenu[6].pricesmall << "\t   " << lunchmenu[6].pricemedium << "\t   " << lunchmenu[6].pricelarge << "\t    " << lunchmenu[6].calories << endl;
+    cout << "\t" << lunchmenu[7].lunchmenulist << "\t                           " << lunchmenu[7].pricesmall << "\t   " << lunchmenu[7].pricemedium << "\t   " << lunchmenu[7].pricelarge << "\t    " << lunchmenu[7].calories << endl;
+    cout << "\t" << lunchmenu[8].lunchmenulist << "\t                           " << lunchmenu[8].pricesmall << "\t   " << lunchmenu[8].pricemedium << "\t   " << lunchmenu[8].pricelarge << "\t    " << lunchmenu[8].calories << endl;
+    cout << "\t" << lunchmenu[9].lunchmenulist << "\t                           " << lunchmenu[9].pricesmall << "\t   " << lunchmenu[9].pricemedium << "\t   " << lunchmenu[9].pricelarge << "\t    " << lunchmenu[9].calories << endl;
+    cout << "\t" << lunchmenu[10].lunchmenulist << "\t   " << lunchmenu[10].pricesmall << "\t   " << lunchmenu[10].pricemedium << "\t   " << lunchmenu[10].pricelarge << "\t    " << lunchmenu[10].calories << endl;
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t          <<Note : All calories are calculated on the medium size>>      \n";
+
+
+
+
+
+}
+
+
+void drinkgetdata()
+{
+    drinkmenu[1].drinkmenulist = "Caffe Americano";
+    drinkmenu[1].pricesmall = 5.00;
+    drinkmenu[1].pricemedium = 7.00;
+    drinkmenu[1].pricelarge = 10.00;
+    drinkmenu[1].calories = 15.00;
+    drinkmenu[2].drinkmenulist = "Cappuccino";
+    drinkmenu[2].pricesmall = 7.00;
+    drinkmenu[2].pricemedium = 9.00;
+    drinkmenu[2].pricelarge = 12.00;
+    drinkmenu[2].calories = 140.00;
+    drinkmenu[3].drinkmenulist = "White Chocolate Mocha";
+    drinkmenu[3].pricesmall = 8.00;
+    drinkmenu[3].pricemedium = 10.00;
+    drinkmenu[3].pricelarge = 12.00;
+    drinkmenu[3].calories = 430.00;
+    drinkmenu[4].drinkmenulist = "Lotus Latte Frappé";
+    drinkmenu[4].pricesmall = 12.00;
+    drinkmenu[4].pricemedium = 15.00;
+    drinkmenu[4].pricelarge = 18.00;
+    drinkmenu[4].calories = 267.00;
+    drinkmenu[5].drinkmenulist = "Tea";
+    drinkmenu[5].pricesmall = 2.00;
+    drinkmenu[5].pricemedium = 3.00;
+    drinkmenu[5].pricelarge = 5.00;
+    drinkmenu[5].calories = 1.00;
+    drinkmenu[6].drinkmenulist = "Lemonade";
+    drinkmenu[6].pricesmall = 7.00;
+    drinkmenu[6].pricemedium = 8.50;
+    drinkmenu[6].pricelarge = 10.00;
+    drinkmenu[6].calories = 40.00;
+    drinkmenu[7].drinkmenulist = "Orange";
+    drinkmenu[7].pricesmall = 7.00;
+    drinkmenu[7].pricemedium = 8.50;
+    drinkmenu[7].pricelarge = 10.00;
+    drinkmenu[7].calories = 45.00;
+    drinkmenu[8].drinkmenulist = "Mango";
+    drinkmenu[8].pricesmall = 10.00;
+    drinkmenu[8].pricemedium = 12.00;
+    drinkmenu[8].pricelarge = 15.00;
+    drinkmenu[8].calories = 128.00;
+    drinkmenu[9].drinkmenulist = "Strawberry Banana Smoothie";
+    drinkmenu[9].pricesmall = 10.00;
+    drinkmenu[9].pricemedium = 13.50;
+    drinkmenu[9].pricelarge = 17.00;
+    drinkmenu[9].calories = 240.00;
+    drinkmenu[10].drinkmenulist = "Mango Pineapple Smoothie";
+    drinkmenu[10].pricesmall = 10.00;
+    drinkmenu[10].pricemedium = 13.50;
+    drinkmenu[10].pricelarge = 17.00;
+    drinkmenu[10].calories = 250.00;
+}
+
+void drinkshowmenu()
+{
+    cout << "                Welcome to FCIS Restaurant.          \n ";
+    cout << "             +============================+          \n\n";
+    cout << "                    $  Drinks Menu  $ \n\n";
+    cout << "  && Please select the food that you would like to purchase. && \n\n";
+    cout << "\t\t                                                                             \n";
+    cout << "\t  Name \t\t                     Small  Medium  Large  Calories" << endl;
+    cout << "\t                                                         \n";
+    cout << "\t" << drinkmenu[1].drinkmenulist << "\t\t              " << drinkmenu[1].pricesmall << "\t     " << drinkmenu[1].pricemedium << "       " << drinkmenu[1].pricelarge << "\t    " << drinkmenu[1].calories << endl;
+    cout << "\t" << drinkmenu[2].drinkmenulist << "\t                      " << drinkmenu[2].pricesmall << "\t     " << drinkmenu[2].pricemedium << "\t     " << drinkmenu[2].pricelarge << "\t    " << drinkmenu[2].calories << endl;
+    cout << "\t" << drinkmenu[3].drinkmenulist << "\t              " << drinkmenu[3].pricesmall << "\t     " << drinkmenu[3].pricemedium << "\t     " << drinkmenu[3].pricelarge << "\t    " << drinkmenu[3].calories << endl;
+    cout << "\t" << drinkmenu[4].drinkmenulist << "\t              " << drinkmenu[4].pricesmall << "     " << drinkmenu[4].pricemedium << "\t     " << drinkmenu[4].pricelarge << "\t    " << drinkmenu[4].calories << endl;
+    cout << "\t" << drinkmenu[5].drinkmenulist << "\t\t                      " << drinkmenu[5].pricesmall << "\t     " << drinkmenu[5].pricemedium << "\t     " << drinkmenu[5].pricelarge << "\t    " << drinkmenu[5].calories << endl;
+    cout << "\t" << drinkmenu[6].drinkmenulist << "\t\t              " << drinkmenu[6].pricesmall << "\t     " << drinkmenu[6].pricemedium << "     " << drinkmenu[6].pricelarge << "\t    " << drinkmenu[6].calories << endl;
+    cout << "\t" << drinkmenu[7].drinkmenulist << "\t\t                      " << drinkmenu[7].pricesmall << "\t     " << drinkmenu[7].pricemedium << "     " << drinkmenu[7].pricelarge << "\t    " << drinkmenu[7].calories << endl;
+    cout << "\t" << drinkmenu[8].drinkmenulist << "\t\t                      " << drinkmenu[8].pricesmall << "     " << drinkmenu[8].pricemedium << "\t     " << drinkmenu[8].pricelarge << "\t    " << drinkmenu[8].calories << endl;
+    cout << "\t" << drinkmenu[9].drinkmenulist << "\t      " << drinkmenu[9].pricesmall << "     " << drinkmenu[9].pricemedium << "    " << drinkmenu[9].pricelarge << "\t    " << drinkmenu[9].calories << endl;
+    cout << "\t" << drinkmenu[10].drinkmenulist << "\t      " << drinkmenu[10].pricesmall << "     " << drinkmenu[10].pricemedium << "    " << drinkmenu[10].pricelarge << "\t    " << drinkmenu[10].calories << endl;
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t                                                                         \n";
+    cout << "\t\t          <<Note : All calories are calculated on the medium size>>      \n";
+}
+void TotalCalories() {
+    int TC[100];
+
+}
+void selectitem()
+{
+    int ch, quantity;
+    char con, size;
+
+    cout << "Enter the item number that you want to order :  ";
+    cin >> ch;
+
+    switch (ch)
+    {
+    case 1:
+
+        gh();
+        break;
+    case 2:
+        gh();
+        break;
+    case 3:
+        gh();
+        break;
+    case 4:
+        gh();
+        break;
+    case 5:
+        gh();
+        break;
+    case 6:
+        gh();
+        break;
+    case 7:
+        gh();
+        break;
+    case 8:
+        gh();
+        break;
+    case 9:
+        gh();
+        break;
+    case 10:
+        gh();
+        break;
+
+    }
+
+}
+
+void gh()
+{
+    int quantity;
+    char size;
+    cout << "please enter quantity :  ";
+    cin >> quantity;
+
+    cout << "please enter size (s: for small , m: for medium , l: for large ) :  ";
+    cin >> size;
+    switch (size)
+    {
+    case 's':
+    case 'S':
+        c[0] = c[0] + quantity;
+        break;
+    case 'm':
+    case 'M':
+        c[0] = c[0] + quantity;
+        break;
+    case 'l':
+    case 'L':
+        c[0] = c[0] + quantity;
+        break;
+    }
+
+}
